@@ -49,13 +49,11 @@ if DateTime.now.strftime('%u').to_i < 6
   response = redmine.log_hours(body: @params, custom_headers: @headers)
   response2 = redmine.log_hours(body: @params2, custom_headers: @headers)
   response3 = redmine.log_hours(body: @params3, custom_headers: @headers)
-  response4 = redmine.log_hours(body: @params4, custom_headers: @headers)
   puts response.inspect
   puts response2.inspect
   puts response3.inspect
-  puts response4.inspect
   mailer = Notifications::Mailer.new(smtp_server: ENV['SMTP_SERVER'], smtp_port: ENV['SMTP_PORT'], smtp_username: ENV['SENDGRID_USERNAME'], smtp_password: ENV['SENDGRID_PASSWORD'], smtp_domain: ENV['SMTP_DOMAIN'])
-  if (response.status == 200 || response.status == 201) && (response2.status == 200 || response2.status == 201) && (response3.status == 200 || response3.status == 201) && (response4.status == 200 || response4.status == 201)
+  if (response.status == 200 || response.status == 201) && (response2.status == 200 || response2.status == 201) && (response3.status == 200 || response3.status == 201)
     mailer.send(host_email: ENV['SMTP_HOST_EMAIL'], delivery_email: ENV['SMTP_DEVELIVERY_EMAIL'])
   end
 end
